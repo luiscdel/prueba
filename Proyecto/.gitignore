@@ -1,0 +1,16 @@
+# Airflow
+airflow/logs/
+airflow/plugins/__pycache__/
+**/__pycache__/
+*.pyc
+
+# dbt
+dbt/sgfood_dw/target/
+dbt/sgfood_dw/dbt_packages/
+dbt/sgfood_dw/logs/
+dbt/sgfood_dw/package-lock.yml
+
+# Entorno
+.env
+.venv/
+venv/
