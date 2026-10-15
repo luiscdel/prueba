@@ -1,0 +1,156 @@
+version: 2
+
+models:
+  - name: dim_producto
+    description: "Dimensión de productos enriquecida con categoría y marca."
+    columns:
+      - name: id_producto
+        description: "Identificador del producto."
+        tests:
+          - not_null
+          - unique
+
+      - name: sku
+        description: "Código SKU único del producto."
+        tests:
+          - not_null
+          - unique
+
+      - name: nombre_producto
+        tests:
+          - not_null
+
+      - name: nombre_categoria
+        tests:
+          - not_null
+
+      - name: nombre_marca
+        tests:
+          - not_null
+  - name: dim_sucursal
+    description: "Dimensión de sucursales."
+    columns:
+      - name: id_sucursal
+        description: "Identificador de la sucursal."
+        tests:
+          - not_null
+          - unique
+
+      - name: nombre
+        tests:
+          - not_null
+
+      - name: ciudad
+        tests:
+          - not_null
+
+      - name: departamento
+        tests:
+          - not_null
+  - name: dim_cliente
+    description: "Dimensión de clientes con tipo y ubicación."
+    columns:
+      - name: id_cliente
+        description: "Identificador del cliente."
+        tests:
+          - not_null
+          - unique
+
+      - name: nombre
+        tests:
+          - not_null
+
+      - name: tipo_cliente
+        tests:
+          - not_null
+  - name: fct_ventas
+    description: >
+      Hecho de ventas con una fila por línea de detalle. Conserva todos los
+      estados de venta para permitir análisis de completadas, anuladas y pendientes.
+    columns:
+      - name: id_detalle
+        description: "Identificador de la línea; define la granularidad del hecho."
+        tests:
+          - not_null
+          - unique
+
+      - name: id_venta
+        tests:
+          - not_null
+
+      - name: fecha
+        tests:
+          - not_null
+
+      - name: id_cliente
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_cliente')
+              field: id_cliente
+
+      - name: id_sucursal
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_sucursal')
+              field: id_sucursal
+
+      - name: id_producto
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_producto')
+              field: id_producto
+
+      - name: estado
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['COMPLETADA', 'ANULADA', 'PENDIENTE']
+
+      - name: cantidad
+        tests:
+          - not_null
+
+      - name: importe_bruto
+        tests:
+          - not_null
+
+      - name: importe_descuento
+        tests:
+          - not_null
+
+      - name: importe_neto
+        tests:
+          - not_null
+  - name: fct_inventario_bodega
+    description: >
+      Snapshot de inventario con una fila esperada por fecha de corte,
+      sucursal y producto.
+    columns:
+      - name: fecha_corte
+        tests:
+          - not_null
+
+      - name: id_sucursal
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_sucursal')
+              field: id_sucursal
+
+      - name: id_producto
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_producto')
+              field: id_producto
+
+      - name: stock_disponible
+        tests:
+          - not_null
+
+      - name: valor_inventario_costo
+        tests:
+          - not_null

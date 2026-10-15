@@ -1,0 +1,81 @@
+﻿id_devolucion,fecha,id_venta,id_producto,cantidad,motivo
+1,2026-08-31,159,1074,3,Vencimiento cercano
+2,2026-03-23,476,1002,3,Error de despacho
+3,2026-06-02,654,1044,1,Error de despacho
+4,2026-08-11,233,1052,2,Cliente desistió
+5,2026-05-07,970,1029,1,Error de despacho
+6,2026-06-30,205,1033,3,Producto dañado
+7,2026-02-02,167,1059,3,Empaque defectuoso
+8,2026-01-13,969,1026,2,Producto dañado
+9,2026-02-02,232,1052,1,Cliente desistió
+10,2026-01-08,659,1009,3,Empaque defectuoso
+11,2026-06-18,217,1031,1,Vencimiento cercano
+12,2026-01-26,558,1038,1,Producto dañado
+13,2026-06-15,506,1063,3,Cliente desistió
+14,2026-02-17,1192,1039,1,Producto dañado
+15,2026-02-02,780,1060,1,Vencimiento cercano
+16,2026-06-30,12,1018,1,Producto dañado
+17,2026-06-25,909,1035,2,Vencimiento cercano
+18,2026-03-02,771,1070,3,Empaque defectuoso
+19,2026-02-12,672,1042,1,Vencimiento cercano
+20,2026-05-05,867,1041,3,Vencimiento cercano
+21,2026-08-31,617,1060,3,Error de despacho
+22,2026-07-23,534,1023,2,Vencimiento cercano
+23,2026-02-24,334,1034,1,Producto dañado
+24,2026-06-19,371,1048,1,Vencimiento cercano
+25,2026-08-09,409,1070,1,Error de despacho
+26,2026-02-19,794,1077,2,Cliente desistió
+27,2026-07-11,411,1049,1,Empaque defectuoso
+28,2026-06-13,1010,1072,2,Error de despacho
+29,2026-02-04,950,1070,1,Producto dañado
+30,2026-04-16,604,1045,2,Producto dañado
+31,2026-06-02,1188,1063,2,Vencimiento cercano
+32,2026-07-06,916,1011,1,Vencimiento cercano
+33,2026-02-11,1125,1022,1,Empaque defectuoso
+34,2026-03-28,1146,1078,3,Producto dañado
+35,2026-04-12,414,1003,2,Empaque defectuoso
+36,2026-02-21,937,1052,1,Error de despacho
+37,2026-01-25,731,1080,3,Error de despacho
+38,2026-08-21,935,1009,1,Cliente desistió
+39,2026-06-19,587,1024,2,Empaque defectuoso
+40,2026-06-22,458,1049,1,Empaque defectuoso
+41,2026-02-02,538,1049,3,Producto dañado
+42,2026-04-03,444,1078,3,Cliente desistió
+43,2026-07-24,1006,1014,2,Cliente desistió
+44,2026-04-16,521,1035,1,Producto dañado
+45,2026-06-26,1101,1001,1,Cliente desistió
+46,2026-07-24,1008,1027,1,Producto dañado
+47,2026-03-02,125,1052,2,Empaque defectuoso
+48,2026-02-14,923,1076,2,Vencimiento cercano
+49,2026-06-10,144,1009,1,Empaque defectuoso
+50,2026-08-30,406,1062,1,Vencimiento cercano
+51,2026-02-21,507,1074,1,Vencimiento cercano
+52,2026-01-28,925,1033,1,Producto dañado
+53,2026-08-30,495,1027,3,Empaque defectuoso
+54,2026-05-25,1113,1066,3,Error de despacho
+55,2026-06-07,615,1039,3,Error de despacho
+56,2026-06-09,21,1029,3,Producto dañado
+57,2026-04-15,1091,1034,1,Cliente desistió
+58,2026-02-10,132,1012,2,Producto dañado
+59,2026-06-01,688,1075,1,Error de despacho
+60,2026-07-23,43,1014,2,Producto dañado
+61,2026-05-12,753,1026,1,Error de despacho
+62,2026-01-16,303,1025,3,Producto dañado
+63,2026-03-26,668,1043,2,Empaque defectuoso
+64,2026-02-19,982,1075,3,Cliente desistió
+65,2026-08-31,915,1018,1,Empaque defectuoso
+66,2026-07-09,1198,1001,2,Cliente desistió
+67,2026-02-06,433,1034,3,Cliente desistió
+68,2026-04-29,155,1041,1,Error de despacho
+69,2026-08-01,894,1020,2,Empaque defectuoso
+70,2026-02-26,715,1066,3,Vencimiento cercano
+71,2026-05-26,554,1046,3,Error de despacho
+72,2026-05-02,908,1027,2,Cliente desistió
+73,2026-07-03,1133,1026,1,Cliente desistió
+74,2026-02-27,161,1027,1,Vencimiento cercano
+75,2026-08-15,442,1024,2,Cliente desistió
+76,2026-08-06,785,1032,1,Producto dañado
+77,2026-07-18,1157,1026,3,Empaque defectuoso
+78,2026-08-31,996,1057,1,Cliente desistió
+79,2026-07-05,1057,1032,2,Cliente desistió
+80,2026-03-11,640,1025,3,Producto dañado

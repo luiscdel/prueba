@@ -1,0 +1,181 @@
+# =============================================================================
+# SG-Food - Proyecto 1 (Seminario de Sistemas 2)
+# Infraestructura local: OLTP fuente + Data Warehouse + Apache Airflow (con dbt)
+#
+#   postgres-oltp  -> Base transaccional fuente (se inicializa con sgfood_oltp.sql)
+#   postgres-dw    -> Data Warehouse (schemas raw, staging, intermediate, marts, audit)
+#   airflow-db     -> Metadatos de Airflow
+#   airflow-*      -> Webserver + Scheduler (LocalExecutor) con dbt en un venv aislado
+#
+# Uso:  docker compose up -d --build      UI Airflow: http://localhost:8080
+# =============================================================================
+
+x-airflow-common: &airflow-common
+  image: sgfood-airflow:2.10.5
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__CORE__DEFAULT_TIMEZONE: America/Guatemala
+    AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: America/Guatemala
+    AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 30
+    # Paquete Python de extracción/carga (scripts/etl)
+    PYTHONPATH: /opt/airflow/scripts
+    # --- Parametrización de conexiones (leídas por scripts/etl/config.py y dbt) ---
+    SGFOOD_OLTP_HOST: postgres-oltp
+    SGFOOD_OLTP_PORT: 5432
+    SGFOOD_OLTP_DB: ${SGFOOD_OLTP_DB:-sgfood_oltp}
+    SGFOOD_OLTP_USER: ${SGFOOD_OLTP_USER:-sgfood}
+    SGFOOD_OLTP_PASSWORD: ${SGFOOD_OLTP_PASSWORD:-sgfood}
+    SGFOOD_DW_HOST: postgres-dw
+    SGFOOD_DW_PORT: 5432
+    SGFOOD_DW_DB: ${SGFOOD_DW_DB:-sgfood_dw}
+    SGFOOD_DW_USER: ${SGFOOD_DW_USER:-dw_user}
+    SGFOOD_DW_PASSWORD: ${SGFOOD_DW_PASSWORD:-dw_password}
+    SGFOOD_DATA_DIR: /opt/airflow/data
+    SGFOOD_SQL_DIR: /opt/airflow/sql
+    SGFOOD_DBT_DIR: /opt/airflow/dbt/sgfood_dw
+    DBT_PROFILES_DIR: /opt/airflow/dbt/sgfood_dw
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./airflow/logs:/opt/airflow/logs
+    - ./airflow/plugins:/opt/airflow/plugins
+    - ./scripts:/opt/airflow/scripts
+    - ./data:/opt/airflow/data:ro
+    - ./sql:/opt/airflow/sql:ro
+    - ./dbt:/opt/airflow/dbt
+  user: "${AIRFLOW_UID:-50000}:0"
+  depends_on: &airflow-common-depends-on
+    airflow-db:
+      condition: service_healthy
+    postgres-oltp:
+      condition: service_healthy
+    postgres-dw:
+      condition: service_healthy
+
+services:
+  # ---------------------------------------------------------------------------
+  # Fuente transaccional (OLTP)
+  # ---------------------------------------------------------------------------
+  postgres-oltp:
+    image: postgres:16-alpine
+    container_name: sgfood-oltp
+    environment:
+      POSTGRES_DB: ${SGFOOD_OLTP_DB:-sgfood_oltp}
+      POSTGRES_USER: ${SGFOOD_OLTP_USER:-sgfood}
+      POSTGRES_PASSWORD: ${SGFOOD_OLTP_PASSWORD:-sgfood}
+    ports:
+      - "${SGFOOD_OLTP_PORT_HOST:-5433}:5432"
+    volumes:
+      - ./data/sgfood_oltp.sql:/docker-entrypoint-initdb.d/01_sgfood_oltp.sql:ro
+      - oltp-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Data Warehouse
+  # ---------------------------------------------------------------------------
+  postgres-dw:
+    image: postgres:16-alpine
+    container_name: sgfood-dw
+    environment:
+      POSTGRES_DB: ${SGFOOD_DW_DB:-sgfood_dw}
+      POSTGRES_USER: ${SGFOOD_DW_USER:-dw_user}
+      POSTGRES_PASSWORD: ${SGFOOD_DW_PASSWORD:-dw_password}
+    ports:
+      - "${SGFOOD_DW_PORT_HOST:-5434}:5432"
+    volumes:
+      - ./sql/ddl/01_schemas_raw_audit.sql:/docker-entrypoint-initdb.d/01_schemas_raw_audit.sql:ro
+      - dw-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Airflow
+  # ---------------------------------------------------------------------------
+  airflow-db:
+    image: postgres:16-alpine
+    container_name: sgfood-airflow-db
+    environment:
+      POSTGRES_DB: airflow
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+    volumes:
+      - airflow-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  airflow-init:
+    <<: *airflow-common
+    build: ./airflow
+    container_name: sgfood-airflow-init
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        airflow db migrate &&
+        airflow users create \
+          --username "$${_AIRFLOW_WWW_USER_USERNAME}" \
+          --password "$${_AIRFLOW_WWW_USER_PASSWORD}" \
+          --firstname Admin --lastname SGFood --role Admin \
+          --email admin@sgfood.local || true
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_WWW_USER_USERNAME: ${AIRFLOW_ADMIN_USER:-admin}
+      _AIRFLOW_WWW_USER_PASSWORD: ${AIRFLOW_ADMIN_PASSWORD:-admin}
+    restart: "no"
+
+  airflow-webserver:
+    <<: *airflow-common
+    container_name: sgfood-airflow-webserver
+    command: webserver
+    ports:
+      - "${AIRFLOW_PORT_HOST:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: sgfood-airflow-scheduler
+    command: scheduler
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    environment:
+      <<: *airflow-common-env
+      AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
+    restart: unless-stopped
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+volumes:
+  oltp-data:
+  dw-data:
+  airflow-db-data:

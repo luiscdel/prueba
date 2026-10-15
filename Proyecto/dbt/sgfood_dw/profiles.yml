@@ -1,0 +1,15 @@
+# Perfil de conexión de dbt. Los valores se toman de variables de entorno
+# (definidas en docker-compose.yml) con valores por defecto para uso local.
+sgfood_dw:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('SGFOOD_DW_HOST', 'localhost') }}"
+      port: "{{ env_var('SGFOOD_DW_PORT', '5434') | int }}"
+      dbname: "{{ env_var('SGFOOD_DW_DB', 'sgfood_dw') }}"
+      user: "{{ env_var('SGFOOD_DW_USER', 'dw_user') }}"
+      password: "{{ env_var('SGFOOD_DW_PASSWORD', 'dw_password') }}"
+      schema: public
+      threads: 4
+      connect_timeout: 10

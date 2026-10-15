@@ -1,0 +1,32 @@
+name: sgfood_dw
+version: "1.0.0"
+config-version: 2
+
+profile: sgfood_dw
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Materializaciones por capa (los modelos se implementan en la fase de dbt)
+models:
+  sgfood_dw:
+    +persist_docs:
+      relation: true
+      columns: true
+    staging:
+      +schema: staging
+      +materialized: view
+    intermediate:
+      +schema: intermediate
+      +materialized: view
+    marts:
+      +schema: marts
+      +materialized: table

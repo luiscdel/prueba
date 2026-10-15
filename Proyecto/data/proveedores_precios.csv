@@ -1,0 +1,104 @@
+﻿id_proveedor,proveedor,id_producto,costo_proveedor,plazo_dias,fecha_vigencia
+8,Logística del Valle,1001,5.09,5,2026-02-06
+7,Abastecedora del Sur,1002,51.05,7,2026-03-18
+8,Logística del Valle,1002,52.82,2,2026-06-20
+9,Mercantil Los Altos,1003,37.94,5,2026-03-14
+12,Comercial Izabal,1004,16.02,5,2026-04-30
+4,Suministros Central,1005,21.38,5,2026-03-31
+12,Comercial Izabal,1006,49.94,5,2026-02-03
+8,Logística del Valle,1007,42.61,7,2026-06-10
+2,Comercial Beta,1007,40.27,2,2026-04-15
+5,Grupo La Ceiba,1008,22.42,5,2026-06-03
+1,Distribuidora Alfa,1008,20.79,7,2026-02-19
+12,Comercial Izabal,1009,14.65,7,2026-08-02
+11,Distribuciones Monja Blanca,1009,14.75,15,2026-08-08
+3,Alimentos del Pacífico,1010,42.23,10,2026-04-19
+9,Mercantil Los Altos,1011,52.2,3,2026-02-06
+5,Grupo La Ceiba,1011,49.54,5,2026-04-29
+4,Suministros Central,1012,43.81,7,2026-07-13
+9,Mercantil Los Altos,1013,31.12,10,2026-01-17
+12,Comercial Izabal,1014,57.39,5,2026-07-30
+3,Alimentos del Pacífico,1015,48.55,15,2026-07-14
+1,Distribuidora Alfa,1015,49.93,10,2026-01-19
+12,Comercial Izabal,1016,43.92,10,2026-05-17
+4,Suministros Central,1016,42.91,5,2026-04-12
+8,Logística del Valle,1017,54.09,15,2026-07-22
+4,Suministros Central,1017,52.73,7,2026-05-04
+7,Abastecedora del Sur,1018,28.02,2,2026-07-27
+6,Importadora Maya,1019,3.81,5,2026-04-29
+3,Alimentos del Pacífico,1019,3.53,3,2026-07-27
+11,Distribuciones Monja Blanca,1020,54.0,10,2026-07-02
+4,Suministros Central,1021,19.19,2,2026-03-10
+11,Distribuciones Monja Blanca,1021,20.82,7,2026-08-08
+4,Suministros Central,1022,41.42,15,2026-03-09
+8,Logística del Valle,1023,47.44,15,2026-02-06
+9,Mercantil Los Altos,1024,7.69,2,2026-02-22
+4,Suministros Central,1024,7.95,3,2026-01-31
+4,Suministros Central,1025,39.7,7,2026-01-15
+1,Distribuidora Alfa,1026,24.65,3,2026-06-26
+5,Grupo La Ceiba,1027,26.38,7,2026-05-17
+10,Proveedora Metropolitana,1028,24.96,10,2026-01-15
+7,Abastecedora del Sur,1028,25.03,15,2026-05-21
+12,Comercial Izabal,1029,56.44,3,2026-05-29
+2,Comercial Beta,1029,50.45,3,2026-05-05
+5,Grupo La Ceiba,1030,30.7,10,2026-06-05
+11,Distribuciones Monja Blanca,1031,48.21,10,2026-08-02
+3,Alimentos del Pacífico,1032,37.34,3,2026-01-19
+9,Mercantil Los Altos,1033,7.87,10,2026-08-01
+3,Alimentos del Pacífico,1033,7.82,7,2026-05-21
+7,Abastecedora del Sur,1034,6.66,7,2026-06-30
+9,Mercantil Los Altos,1035,34.9,15,2026-04-01
+6,Importadora Maya,1035,36.84,10,2026-01-01
+4,Suministros Central,1036,5.77,5,2026-01-14
+1,Distribuidora Alfa,1037,50.29,7,2026-01-17
+7,Abastecedora del Sur,1038,30.13,5,2026-05-11
+4,Suministros Central,1038,26.29,5,2026-04-25
+7,Abastecedora del Sur,1039,45.8,3,2026-02-24
+11,Distribuciones Monja Blanca,1039,40.34,15,2026-08-03
+3,Alimentos del Pacífico,1040,20.0,5,2026-05-12
+5,Grupo La Ceiba,1041,28.79,10,2026-01-13
+7,Abastecedora del Sur,1042,45.87,10,2026-05-04
+4,Suministros Central,1043,50.24,15,2026-05-03
+11,Distribuciones Monja Blanca,1044,55.93,2,2026-02-02
+10,Proveedora Metropolitana,1045,47.59,15,2026-05-29
+6,Importadora Maya,1046,41.72,5,2026-01-07
+1,Distribuidora Alfa,1047,24.61,5,2026-06-20
+1,Distribuidora Alfa,1048,31.9,3,2026-04-10
+9,Mercantil Los Altos,1048,31.08,7,2026-06-06
+12,Comercial Izabal,1049,19.36,10,2026-03-30
+11,Distribuciones Monja Blanca,1050,4.22,3,2026-03-29
+5,Grupo La Ceiba,1051,34.53,7,2026-03-12
+1,Distribuidora Alfa,1052,34.85,2,2026-07-18
+7,Abastecedora del Sur,1053,52.03,10,2026-01-19
+6,Importadora Maya,1054,8.01,7,2026-02-19
+12,Comercial Izabal,1054,8.71,3,2026-02-05
+9,Mercantil Los Altos,1055,37.84,10,2026-02-02
+5,Grupo La Ceiba,1055,34.65,3,2026-03-09
+7,Abastecedora del Sur,1056,14.14,10,2026-02-16
+9,Mercantil Los Altos,1057,29.23,3,2026-05-06
+8,Logística del Valle,1058,33.87,5,2026-02-16
+12,Comercial Izabal,1059,30.97,15,2026-06-28
+4,Suministros Central,1060,11.78,5,2026-02-12
+5,Grupo La Ceiba,1061,29.59,15,2026-07-13
+8,Logística del Valle,1062,19.08,10,2026-05-19
+10,Proveedora Metropolitana,1063,39.1,7,2026-03-10
+1,Distribuidora Alfa,1064,17.42,10,2026-06-03
+5,Grupo La Ceiba,1065,43.06,10,2026-01-06
+1,Distribuidora Alfa,1066,16.59,10,2026-04-23
+8,Logística del Valle,1067,22.46,7,2026-01-26
+1,Distribuidora Alfa,1068,29.67,3,2026-03-01
+9,Mercantil Los Altos,1068,27.72,7,2026-02-28
+5,Grupo La Ceiba,1069,7.17,15,2026-06-12
+2,Comercial Beta,1070,54.93,5,2026-01-29
+8,Logística del Valle,1071,8.92,5,2026-07-26
+12,Comercial Izabal,1071,8.53,7,2026-01-21
+5,Grupo La Ceiba,1072,25.93,3,2026-07-07
+5,Grupo La Ceiba,1073,16.82,10,2026-06-21
+8,Logística del Valle,1074,50.07,10,2026-01-31
+1,Distribuidora Alfa,1075,25.12,5,2026-06-24
+4,Suministros Central,1076,46.99,7,2026-06-23
+3,Alimentos del Pacífico,1077,12.2,7,2026-03-11
+10,Proveedora Metropolitana,1078,26.78,2,2026-05-23
+10,Proveedora Metropolitana,1079,36.56,2,2026-04-28
+4,Suministros Central,1079,40.34,7,2026-01-06
+1,Distribuidora Alfa,1080,44.18,5,2026-02-10

@@ -1,0 +1,131 @@
+version: 2
+
+# Fuentes cargadas por Python (scripts/etl) en el schema raw.
+# Las pruebas de fuente se ejecutan en la tarea "dbt_test" del DAG.
+sources:
+  - name: oltp
+    description: "Tablas de la base transaccional oltp_sgfood replicadas en raw"
+    schema: raw
+    loaded_at_field: _fecha_carga
+    freshness:
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 72, period: hour}
+    tables:
+      - name: sucursal
+        columns:
+          - name: id_sucursal
+            tests: [unique, not_null]
+      - name: categoria
+        columns:
+          - name: id_categoria
+            tests: [unique, not_null]
+      - name: marca
+        columns:
+          - name: id_marca
+            tests: [unique, not_null]
+      - name: producto
+        columns:
+          - name: id_producto
+            tests: [unique, not_null]
+          - name: sku
+            tests: [unique, not_null]
+          - name: id_categoria
+            tests:
+              - not_null
+              - relationships:
+                  to: source('oltp', 'categoria')
+                  field: id_categoria
+          - name: id_marca
+            tests:
+              - not_null
+              - relationships:
+                  to: source('oltp', 'marca')
+                  field: id_marca
+      - name: cliente
+        columns:
+          - name: id_cliente
+            tests: [unique, not_null]
+      - name: venta
+        columns:
+          - name: id_venta
+            tests: [unique, not_null]
+          - name: id_cliente
+            tests:
+              - relationships:
+                  to: source('oltp', 'cliente')
+                  field: id_cliente
+          - name: id_sucursal
+            tests:
+              - relationships:
+                  to: source('oltp', 'sucursal')
+                  field: id_sucursal
+          - name: estado
+            tests:
+              - accepted_values:
+                  values: ['COMPLETADA', 'ANULADA', 'PENDIENTE']
+      - name: venta_detalle
+        columns:
+          - name: id_detalle
+            tests: [unique, not_null]
+          - name: id_venta
+            tests:
+              - relationships:
+                  to: source('oltp', 'venta')
+                  field: id_venta
+          - name: id_producto
+            tests:
+              - relationships:
+                  to: source('oltp', 'producto')
+                  field: id_producto
+
+  - name: archivos
+    description: "Archivos CSV externos cargados con Python en raw"
+    schema: raw
+    loaded_at_field: _fecha_carga
+    freshness:
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 72, period: hour}
+    tables:
+      - name: inventario_bodega
+        columns:
+          - name: id_producto
+            tests:
+              - not_null
+              - relationships:
+                  to: source('oltp', 'producto')
+                  field: id_producto
+          - name: id_sucursal
+            tests:
+              - not_null
+              - relationships:
+                  to: source('oltp', 'sucursal')
+                  field: id_sucursal
+      - name: proveedores_precios
+        columns:
+          - name: id_producto
+            tests:
+              - not_null
+              - relationships:
+                  to: source('oltp', 'producto')
+                  field: id_producto
+      - name: promociones
+        columns:
+          - name: id_promocion
+            tests: [unique, not_null]
+      - name: metas_ventas
+        columns:
+          - name: id_sucursal
+            tests:
+              - not_null
+              - relationships:
+                  to: source('oltp', 'sucursal')
+                  field: id_sucursal
+      - name: devoluciones
+        columns:
+          - name: id_devolucion
+            tests: [unique, not_null]
+          - name: id_venta
+            tests:
+              - relationships:
+                  to: source('oltp', 'venta')
+                  field: id_venta

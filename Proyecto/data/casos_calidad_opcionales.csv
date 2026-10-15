@@ -1,0 +1,11 @@
+﻿entidad,campo,valor_prueba,tipo_incidencia
+cliente,id_cliente,,NULL en identificador
+producto,precio_lista,-12.50,Precio negativo
+venta,id_cliente,999999,FK huérfana
+venta_detalle,cantidad,0,Cantidad cero
+venta_detalle,descuento,1.20,Descuento mayor a 100%
+inventario,stock_disponible,-5,Stock negativo
+inventario,fecha_vencimiento,2025-12-31,Vencimiento anterior al corte
+proveedores_precios,costo_proveedor,,Costo nulo
+metas_ventas,meta_ventas,0,Meta cero
+devoluciones,cantidad,99,Devolución superior a venta

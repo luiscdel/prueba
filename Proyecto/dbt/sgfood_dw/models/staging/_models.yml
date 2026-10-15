@@ -1,0 +1,205 @@
+version: 2
+
+models:
+  - name: stg_oltp_sucursal
+    description: "Vista limpia de sucursales provenientes de la capa raw."
+    columns:
+      - name: id_sucursal
+        description: "Identificador de la sucursal."
+        tests:
+          - not_null
+          - unique
+      - name: nombre
+        tests:
+          - not_null
+
+  - name: stg_oltp_categoria
+    description: "Vista limpia de categorías de productos provenientes de la capa raw."
+    columns:
+      - name: id_categoria
+        description: "Identificador de la categoría."
+        tests:
+          - not_null
+          - unique
+      - name: nombre
+        tests:
+          - not_null
+
+  - name: stg_oltp_marca
+    description: "Vista limpia de marcas provenientes de la capa raw."
+    columns:
+      - name: id_marca
+        description: "Identificador de la marca."
+        tests:
+          - not_null
+          - unique
+      - name: nombre
+        tests:
+          - not_null
+
+  - name: stg_oltp_producto
+    description: "Vista limpia de productos provenientes de la capa raw."
+    columns:
+      - name: id_producto
+        description: "Identificador del producto."
+        tests:
+          - not_null
+          - unique
+      - name: sku
+        description: "Código SKU único del producto."
+        tests:
+          - not_null
+          - unique
+      - name: nombre
+        tests:
+          - not_null
+      - name: id_categoria
+        tests:
+          - not_null
+      - name: id_marca
+        tests:
+          - not_null
+
+  - name: stg_oltp_cliente
+    description: "Vista limpia de clientes provenientes de la capa raw."
+    columns:
+      - name: id_cliente
+        description: "Identificador del cliente."
+        tests:
+          - not_null
+          - unique
+      - name: nombre
+        tests:
+          - not_null
+      - name: tipo_cliente
+        tests:
+          - not_null
+
+  - name: stg_oltp_venta
+    description: "Vista limpia de encabezados de venta provenientes de la capa raw."
+    columns:
+      - name: id_venta
+        description: "Identificador de la venta."
+        tests:
+          - not_null
+          - unique
+      - name: fecha
+        tests:
+          - not_null
+      - name: id_cliente
+        tests:
+          - not_null
+      - name: id_sucursal
+        tests:
+          - not_null
+      - name: estado
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['COMPLETADA', 'ANULADA', 'PENDIENTE']
+
+  - name: stg_oltp_venta_detalle
+    description: "Vista limpia de las líneas de detalle de cada venta."
+    columns:
+      - name: id_detalle
+        description: "Identificador de la línea de detalle."
+        tests:
+          - not_null
+          - unique
+      - name: id_venta
+        tests:
+          - not_null
+      - name: id_producto
+        tests:
+          - not_null
+      - name: cantidad
+        tests:
+          - not_null
+      - name: subtotal
+        tests:
+          - not_null
+
+  - name: stg_archivos_inventario_bodega
+    description: "Vista limpia de snapshots de inventario por producto, sucursal y fecha de corte."
+    columns:
+      - name: fecha_corte
+        tests:
+          - not_null
+      - name: id_sucursal
+        tests:
+          - not_null
+      - name: id_producto
+        tests:
+          - not_null
+      - name: stock_disponible
+        tests:
+          - not_null
+
+  - name: stg_archivos_proveedores_precios
+    description: "Vista limpia de precios y plazos de proveedores por producto."
+    columns:
+      - name: id_proveedor
+        tests:
+          - not_null
+      - name: id_producto
+        tests:
+          - not_null
+      - name: fecha_vigencia
+        tests:
+          - not_null
+      - name: costo_proveedor
+        tests:
+          - not_null
+
+  - name: stg_archivos_promociones
+    description: "Vista limpia de promociones provenientes del archivo CSV."
+    columns:
+      - name: id_promocion
+        tests:
+          - not_null
+          - unique
+      - name: nombre
+        tests:
+          - not_null
+      - name: fecha_inicio
+        tests:
+          - not_null
+      - name: fecha_fin
+        tests:
+          - not_null
+
+  - name: stg_archivos_metas_ventas
+    description: "Vista limpia de metas de venta por período y sucursal."
+    columns:
+      - name: periodo
+        tests:
+          - not_null
+      - name: id_sucursal
+        tests:
+          - not_null
+      - name: meta_ventas
+        tests:
+          - not_null
+      - name: meta_unidades
+        tests:
+          - not_null
+
+  - name: stg_archivos_devoluciones
+    description: "Vista limpia de devoluciones provenientes del archivo CSV."
+    columns:
+      - name: id_devolucion
+        tests:
+          - not_null
+          - unique
+      - name: fecha
+        tests:
+          - not_null
+      - name: id_venta
+        tests:
+          - not_null
+      - name: id_producto
+        tests:
+          - not_null
+      - name: cantidad
+        tests:
+          - not_null

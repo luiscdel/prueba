@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: int_ventas_detalle
+    description: >
+      Una fila por línea de venta, con atributos del encabezado y los
+      importes bruto, descuento y neto.
+    columns:
+      - name: id_detalle
+        description: "Identificador único de la línea de venta."
+        tests:
+          - not_null
+          - unique
+
+      - name: id_venta
+        tests:
+          - not_null
+
+      - name: fecha
+        tests:
+          - not_null
+
+      - name: id_cliente
+        tests:
+          - not_null
+
+      - name: id_sucursal
+        tests:
+          - not_null
+
+      - name: id_producto
+        tests:
+          - not_null
+
+      - name: importe_neto
+        tests:
+          - not_null
